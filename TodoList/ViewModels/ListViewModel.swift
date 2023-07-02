@@ -55,23 +55,34 @@ class ListViewModel: ObservableObject {
         items.move(fromOffsets: from, toOffset: to)
     }
     
-    func addItem(title: String) {
-        let newItem = ItemModel(title: title, isCompleted: false) // default false
+    func addItem(title: String, startTime: Date, endTime:Date, emoji:String) {
+        let newItem = ItemModel(title: title, isCompleted: false, startTime: startTime, endTime: endTime, emoji: emoji) // default false
         items.append(newItem)
     }
     
     func updateItem(item: ItemModel) {
         
         if let index = items.firstIndex(where: { $0.id == item.id}){
-           // items[index] = ItemModel(title: item.title, isCompleted: !item.isCompleted)
+           
             items[index] = item.updateCompletion()
         }
+        
     }
     
     func saveItems() {
         if let encodedData = try? JSONEncoder().encode(items) {
             UserDefaults.standard.set(encodedData, forKey: itemsKey)
         }
+    }
+    
+    func getCountOfItems() -> Int {
+        let count = items.count
+        return count
+    }
+    
+    func getCountCompletedItems() -> Int {
+        let completedItems = items.filter { $0.isCompleted }
+        return completedItems.count
     }
     
 }

@@ -12,14 +12,20 @@ import SwiftUI
 struct TodoListApp: App {
     
     @StateObject var listViewModel: ListViewModel = ListViewModel()
+    @StateObject var userViewModel: UserViewModel = UserViewModel()
+    @StateObject var scoreViewModel: ScoreViewModel = ScoreViewModel()
     
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                ListView()
+                OpeningView()
+                
             }
           // entire app navigation view da olsun
             .environmentObject(listViewModel)
+            .environmentObject(userViewModel)
+            .environmentObject(scoreViewModel)
+          
         }
     }
 }

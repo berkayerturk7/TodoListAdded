@@ -1,7 +1,23 @@
+//
+//  EditItemView.swift
+//  TodoList
+//
+//  Created by Berkay Ertürk on 25.06.2023.
+//
 
 import SwiftUI
 
-struct AddView: View {
+struct EditItemView: View {
+    
+    var itemToBeEdited: ItemModel
+    
+    init(itemToBeEdited: ItemModel) {
+            self.itemToBeEdited = itemToBeEdited
+            _textFieldText = State(initialValue: itemToBeEdited.title)
+            _selectedEmoji = State(initialValue: itemToBeEdited.emoji)
+            _selectedStartTime = State(initialValue: itemToBeEdited.startTime)
+            _selectedEndTime = State(initialValue: itemToBeEdited.endTime)
+        }
     
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var listViewModel: ListViewModel
@@ -13,32 +29,33 @@ struct AddView: View {
     private let calendar = Calendar.current
     @State private var selectedEmoji = "🎉"
     let emojis = ["😊", "🎉", "🌞", "🐶", "🍕"]
- 
+   
+    
     var body: some View {
         
-
+        
         ScrollView {
             VStack {
-                TextField("Type sth here.. ", text: $textFieldText)
+                TextField("", text: $textFieldText)
                     .padding(.horizontal)
                     .frame(height: 55)
                     .background(Color(UIColor.secondarySystemBackground))
                     .cornerRadius(10)
                 
                 DatePicker(
-                               "Start Time",
-                               selection: $selectedStartTime,
-                               in: ...selectedEndTime, // İkinci DatePicker'ın seçilen saatine kadar olan aralık
-                               displayedComponents: .hourAndMinute
-                           )
-                         
-                           
-                           DatePicker(
-                               "End Time",
-                               selection: $selectedEndTime,
-                               in: selectedStartTime..., // İlk DatePicker'ın seçilen saatinden sonraki aralık
-                               displayedComponents: .hourAndMinute
-                           )
+                    "Start Time",
+                    selection: $selectedStartTime,
+                    in: ...selectedEndTime, // İkinci DatePicker'ın seçilen saatine kadar olan aralık
+                    displayedComponents: .hourAndMinute
+                )
+                
+                
+                DatePicker(
+                    "End Time",
+                    selection: $selectedEndTime,
+                    in: selectedStartTime..., // İlk DatePicker'ın seçilen saatinden sonraki aralık
+                    displayedComponents: .hourAndMinute
+                )
                 Picker("Select an Emoji", selection: $selectedEmoji) {
                     ForEach(emojis, id: \.self) { emoji in
                         Text(emoji)
@@ -47,17 +64,17 @@ struct AddView: View {
                 }.pickerStyle(SegmentedPickerStyle())
                 
                 Button(action: saveButtonPressed, label: {
-                        Text("Save".uppercased())
+                    Text("Save".uppercased())
                         .foregroundColor(.white)
                         .font(.headline)
                         .frame(height: 55)
                         .frame(maxWidth: .infinity)
                         .background(Color.accentColor)
                         .cornerRadius(10)
-
+                    
                 })
-               
-                           
+                
+                
             }
             .padding(14)
         }
@@ -66,8 +83,12 @@ struct AddView: View {
     }
     
     func saveButtonPressed() {
+       
         if textIsAppropriate() {
-            listViewModel.addItem(title: textFieldText, startTime: selectedStartTime, endTime: selectedEndTime, emoji: selectedEmoji)
+           listViewModel.items.removeAll { $0.id == itemToBeEdited.id }
+           listViewModel.addItem(title: textFieldText, startTime: selectedStartTime, endTime: selectedEndTime, emoji: selectedEmoji)
+            print("x")
+
             presentationMode.wrappedValue.dismiss()
         }
     }
@@ -88,24 +109,9 @@ struct AddView: View {
     
 }
 
-struct AddView_Previews: PreviewProvider {
+
+struct EditItemView_Previews: PreviewProvider {
     static var previews: some View {
-        
-        Group {
-            NavigationView {
-                AddView()
-            }
-            .preferredColorScheme(.light)
-            .environmentObject(ListViewModel())
-            
-            NavigationView {
-                AddView()
-            }
-            .preferredColorScheme(.dark)
-            .environmentObject(ListViewModel())
-            
-        }
-        
-      
+        EditItemView(itemToBeEdited: ItemModel.init(title: "", isCompleted: false, startTime: Date(), endTime: Date(), emoji: ""))
     }
 }
