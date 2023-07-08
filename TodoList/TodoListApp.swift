@@ -14,6 +14,7 @@ struct TodoListApp: App {
     @StateObject var listViewModel: ListViewModel = ListViewModel()
     @StateObject var userViewModel: UserViewModel = UserViewModel()
     @StateObject var scoreViewModel: ScoreViewModel = ScoreViewModel()
+    let tabSelection = TabSelection()
     
     var body: some Scene {
         WindowGroup {
@@ -25,6 +26,7 @@ struct TodoListApp: App {
             .environmentObject(listViewModel)
             .environmentObject(userViewModel)
             .environmentObject(scoreViewModel)
+            .environmentObject(tabSelection)
           
         }
     }

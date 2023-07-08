@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		A933DEAB2A4795DF00310EC6 /* EditItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A933DEAA2A4795DF00310EC6 /* EditItemView.swift */; };
+		A9424F0C2A58C5B600798381 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9424F0B2A58C5B600798381 /* ButtonView.swift */; };
 		A94584672A48FC5200573545 /* OpeningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94584662A48FC5200573545 /* OpeningView.swift */; };
-		A94584692A4901C500573545 /* userModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94584682A4901C500573545 /* userModel.swift */; };
+		A94584692A4901C500573545 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94584682A4901C500573545 /* UserModel.swift */; };
 		A945846B2A49025D00573545 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A945846A2A49025D00573545 /* UserViewModel.swift */; };
 		A945846F2A4908AC00573545 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A945846E2A4908AC00573545 /* SettingsView.swift */; };
 		A94584712A493A3900573545 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94584702A493A3900573545 /* StatisticsView.swift */; };
-		A959CAE92A4FB84B007392D0 /* scoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A959CAE82A4FB84B007392D0 /* scoreModel.swift */; };
+		A959CAE92A4FB84B007392D0 /* ScoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A959CAE82A4FB84B007392D0 /* ScoreModel.swift */; };
 		A959CAEB2A4FB96C007392D0 /* ScoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A959CAEA2A4FB96C007392D0 /* ScoreViewModel.swift */; };
 		A95E66FE2A4255780027D467 /* TodoListApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E66FD2A4255780027D467 /* TodoListApp.swift */; };
 		A95E67022A4255790027D467 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A95E67012A4255790027D467 /* Assets.xcassets */; };
@@ -24,16 +25,20 @@
 		A95E67162A43A6AD0027D467 /* ItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E67152A43A6AD0027D467 /* ItemModel.swift */; };
 		A95E671B2A43AE560027D467 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E671A2A43AE560027D467 /* ListViewModel.swift */; };
 		A95E671D2A43D4BB0027D467 /* NoItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E671C2A43D4BB0027D467 /* NoItemsView.swift */; };
+		A9BE502E2A51EC5500885641 /* TabSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BE502D2A51EC5500885641 /* TabSelection.swift */; };
+		A9BE50302A51ECE000885641 /* FullListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BE502F2A51ECE000885641 /* FullListView.swift */; };
+		A9CB88E82A5A1A4500EF2E37 /* GlobalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CB88E72A5A1A4500EF2E37 /* GlobalData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A933DEAA2A4795DF00310EC6 /* EditItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemView.swift; sourceTree = "<group>"; };
+		A9424F0B2A58C5B600798381 /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		A94584662A48FC5200573545 /* OpeningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningView.swift; sourceTree = "<group>"; };
-		A94584682A4901C500573545 /* userModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userModel.swift; sourceTree = "<group>"; };
+		A94584682A4901C500573545 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		A945846A2A49025D00573545 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		A945846E2A4908AC00573545 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A94584702A493A3900573545 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
-		A959CAE82A4FB84B007392D0 /* scoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scoreModel.swift; sourceTree = "<group>"; };
+		A959CAE82A4FB84B007392D0 /* ScoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreModel.swift; sourceTree = "<group>"; };
 		A959CAEA2A4FB96C007392D0 /* ScoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreViewModel.swift; sourceTree = "<group>"; };
 		A95E66FA2A4255780027D467 /* TodoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A95E66FD2A4255780027D467 /* TodoListApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListApp.swift; sourceTree = "<group>"; };
@@ -47,6 +52,9 @@
 		A95E671A2A43AE560027D467 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		A95E671C2A43D4BB0027D467 /* NoItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoItemsView.swift; sourceTree = "<group>"; };
 		A95E67202A43E38B0027D467 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A9BE502D2A51EC5500885641 /* TabSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelection.swift; sourceTree = "<group>"; };
+		A9BE502F2A51ECE000885641 /* FullListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullListView.swift; sourceTree = "<group>"; };
+		A9CB88E72A5A1A4500EF2E37 /* GlobalData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +87,7 @@
 		A95E66FC2A4255780027D467 /* TodoList */ = {
 			isa = PBXGroup;
 			children = (
+				A9BE502C2A51EC3B00885641 /* Other */,
 				A95E67202A43E38B0027D467 /* Info.plist */,
 				A95E66FD2A4255780027D467 /* TodoListApp.swift */,
 				A95E67172A43ADF80027D467 /* ViewModels */,
@@ -103,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				A95E670D2A4257A10027D467 /* ListView.swift */,
+				A9424F0B2A58C5B600798381 /* ButtonView.swift */,
 				A94584702A493A3900573545 /* StatisticsView.swift */,
 				A945846E2A4908AC00573545 /* SettingsView.swift */,
 				A94584662A48FC5200573545 /* OpeningView.swift */,
@@ -110,6 +120,7 @@
 				A95E670F2A4258DA0027D467 /* ListRowView.swift */,
 				A95E67112A425A1F0027D467 /* AddView.swift */,
 				A933DEAA2A4795DF00310EC6 /* EditItemView.swift */,
+				A9BE502F2A51ECE000885641 /* FullListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -118,8 +129,8 @@
 			isa = PBXGroup;
 			children = (
 				A95E67152A43A6AD0027D467 /* ItemModel.swift */,
-				A959CAE82A4FB84B007392D0 /* scoreModel.swift */,
-				A94584682A4901C500573545 /* userModel.swift */,
+				A959CAE82A4FB84B007392D0 /* ScoreModel.swift */,
+				A94584682A4901C500573545 /* UserModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -132,6 +143,15 @@
 				A959CAEA2A4FB96C007392D0 /* ScoreViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		A9BE502C2A51EC3B00885641 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				A9BE502D2A51EC5500885641 /* TabSelection.swift */,
+				A9CB88E72A5A1A4500EF2E37 /* GlobalData.swift */,
+			);
+			path = Other;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -206,16 +226,20 @@
 			files = (
 				A95E67162A43A6AD0027D467 /* ItemModel.swift in Sources */,
 				A945846B2A49025D00573545 /* UserViewModel.swift in Sources */,
-				A959CAE92A4FB84B007392D0 /* scoreModel.swift in Sources */,
+				A959CAE92A4FB84B007392D0 /* ScoreModel.swift in Sources */,
 				A95E67122A425A1F0027D467 /* AddView.swift in Sources */,
-				A94584692A4901C500573545 /* userModel.swift in Sources */,
+				A94584692A4901C500573545 /* UserModel.swift in Sources */,
+				A9424F0C2A58C5B600798381 /* ButtonView.swift in Sources */,
 				A95E671B2A43AE560027D467 /* ListViewModel.swift in Sources */,
 				A959CAEB2A4FB96C007392D0 /* ScoreViewModel.swift in Sources */,
 				A94584712A493A3900573545 /* StatisticsView.swift in Sources */,
 				A95E66FE2A4255780027D467 /* TodoListApp.swift in Sources */,
 				A95E670E2A4257A10027D467 /* ListView.swift in Sources */,
+				A9BE50302A51ECE000885641 /* FullListView.swift in Sources */,
+				A9BE502E2A51EC5500885641 /* TabSelection.swift in Sources */,
 				A933DEAB2A4795DF00310EC6 /* EditItemView.swift in Sources */,
 				A95E671D2A43D4BB0027D467 /* NoItemsView.swift in Sources */,
+				A9CB88E82A5A1A4500EF2E37 /* GlobalData.swift in Sources */,
 				A945846F2A4908AC00573545 /* SettingsView.swift in Sources */,
 				A95E67102A4258DA0027D467 /* ListRowView.swift in Sources */,
 				A94584672A48FC5200573545 /* OpeningView.swift in Sources */,

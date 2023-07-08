@@ -1,66 +1,96 @@
 import SwiftUI
+import Charts
 
 struct StatisticsView: View {
     @EnvironmentObject var scoreViewModel: ScoreViewModel
-    var nowTime : Date = Date()
     @State private var totalTasks = 0
     @State private var doneTasks = 0
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
-                NavigationView {
-                    List {
-                        ForEach(scoreViewModel.scores) { score in
-                            HStack {
-                                VStack(alignment: .leading, spacing: 8) {
-                                    Text("Total Tasks: \(score.totalTasks)")
-                                        .font(.headline)
-                                    Text("Done Tasks: \(score.doneTasks)")
-                                    
-                                    Text("Now Time: \(formatTime(date: nowTime))")
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
-                                }
-                                .padding(10)
-                                .background(Color.white)
-                                .cornerRadius(10)
-                                .shadow(color: Color.gray.opacity(0.3), radius: 5, x: 0, y: 2)
-                            .padding(.vertical, 5)
+        NavigationView {
+            List {
+                ForEach(scoreViewModel.scores) { score in
+                    HStack {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Date: \(score.dateScore)")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                            Text("Total Tasks")
+                                .font(.headline)
+                            Text("Done Tasks")
+                        }
+                        .padding(10)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        Spacer()
+                        
+                        ZStack {
+                            Circle()
+                                .trim(from: 0, to: CGFloat(score.doneTasks) / CGFloat(score.totalTasks))
+                                .stroke(Color.green, lineWidth: 20)
+                                .rotationEffect(Angle(degrees: -90))
+                                .frame(width: 100, height: 100)
+                                .overlay(
+                                    Circle()
+                                        .stroke(Color.gray.opacity(0.2), lineWidth: 20)
+                                )
+                                .foregroundColor(.clear)
                                 
-                                Button(action: {
-                                    // Butona tıklanınca çalışacak kodlar
-                                    // Edit user info
-                                }) {
-                                    Image(systemName: "pencil.circle.fill")
-                                        .foregroundColor(.secondary)
-                                        .font(.title)
-                                }
+                            HStack {
+                                Text("\(score.doneTasks)")
+                                    .font(.title3)
+                                    .foregroundColor(colorScheme == .dark ? .white : .black)
+                                    .fontWeight(.bold)
+                                Text("/")
+                                    .font(.title3)
+                                    .foregroundColor(colorScheme == .dark ? .white : .black)
+                                Text("\(score.totalTasks)")
+                                    .font(.title2)
+                                    .foregroundColor(colorScheme == .dark ? .white : .black)
+                                    .fontWeight(.bold)
                             }
                         }
+                        
                     }
-                    .listStyle(GroupedListStyle())
-                    .navigationBarTitle("İstatistiklerim")
+                    
                 }
-                .onAppear {
-                    scoreViewModel.getScore()
-                }
+                
             }
+            .listStyle(GroupedListStyle())
+            .navigationBarTitle("İstatistiklerim")
+            
+        }
+        .onAppear {
+            scoreViewModel.getScore()
+        }
+    }
+}
 
-    
-    func formatTime(date: Date) -> String {
-         let formatter = DateFormatter()
-         formatter.dateFormat = "HH:mm" // Kullanmak istediğiniz saat formatını belirleyin
-         return formatter.string(from: date)
-     }
-   }
+
+
+/*ScrollView {
+    Chart(scoreViewModel.scores) { score in
+        BarMark(x: .value("Total Score", score.dateScore),
+                y: .value("Total Score", score.totalTasks))
+    }.foregroundColor(.red)
+}*/
+
 
 struct StatisticsView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-           // ListView()
-        StatisticsView()
-        }
-        .environmentObject(ScoreViewModel())
+        let scoreViewModel = ScoreViewModel()
+        scoreViewModel.scores = [
+            ScoreModel(dateScore: "", totalTasks: 10, doneTasks: 5),
+            ScoreModel(dateScore: "", totalTasks: 8, doneTasks: 3)
+        ]
         
+        return NavigationView {
+            StatisticsView()
+                .environmentObject(scoreViewModel)
+        }
     }
 }
+
 // cmd opt enter preview

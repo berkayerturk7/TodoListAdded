@@ -3,6 +3,7 @@ import SwiftUI
 
 struct AddView: View {
     
+    
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var listViewModel: ListViewModel
     @State var textFieldText: String = ""
@@ -13,7 +14,8 @@ struct AddView: View {
     private let calendar = Calendar.current
     @State private var selectedEmoji = "🎉"
     let emojis = ["😊", "🎉", "🌞", "🐶", "🍕"]
- 
+    let structC = StructC()
+    
     var body: some View {
         
 
@@ -61,6 +63,7 @@ struct AddView: View {
             }
             .padding(14)
         }
+        //.onAppear(perform: structC.incValue) bakılacak!
         .navigationTitle("Add an item 🖊️ ")
         .alert(isPresented: $showAlert, content: getAlert)
     }

@@ -17,6 +17,7 @@ struct EditItemView: View {
             _selectedEmoji = State(initialValue: itemToBeEdited.emoji)
             _selectedStartTime = State(initialValue: itemToBeEdited.startTime)
             _selectedEndTime = State(initialValue: itemToBeEdited.endTime)
+            structA.incValue()
         }
     
     @Environment(\.presentationMode) var presentationMode
@@ -29,7 +30,7 @@ struct EditItemView: View {
     private let calendar = Calendar.current
     @State private var selectedEmoji = "🎉"
     let emojis = ["😊", "🎉", "🌞", "🐶", "🍕"]
-   
+    let structA = StructA()
     
     var body: some View {
         
