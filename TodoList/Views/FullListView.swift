@@ -1,5 +1,6 @@
-
 import SwiftUI
+import AVKit
+
 
 struct FullList: View {
     
@@ -13,112 +14,119 @@ struct FullList: View {
     @State var animate: Bool = false
     let secondaryAccentColor = Color("SecondaryAccentColor")
     let structB = StructB()
-   
+    @State private var isShowingSheet = false
+    @State private var isAnimating = false
+    
+    var soundManager = SoundManager()
     
     var body: some View {
         
         ZStack(alignment: .top) {
-            
+     
+            VStack {
+                LogoView()
+                Picker(selection: $selectedIndex, label: Text("Tarih")) {
+                    Text(getTodayDate()).tag(0)
+                    Text(getTomorrowDate()).tag(1)
+                }
+                .pickerStyle(SegmentedPickerStyle())
                 
-                
-                    VStack {
-                        Picker(selection: $selectedIndex, label: Text("Tarih")) {
-                            Text(getTodayDate()).tag(0)
-                            Text(getTomorrowDate()).tag(1)
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
-                        
-                        Text("I am planning for \(selectedIndex == 0 ? getTodayDate() : getTomorrowDate())")
-                            .font(.title)
-                            .padding()
-                        List {
-                            ForEach(listViewModel.items) { item in //arrayin her bir elemanı = item
-                                ListRowView(item: item)
-                                    .onTapGesture { // bir hücreye tıkladığımızda
-                                        withAnimation(.linear) {
-                                            listViewModel.updateItem(item: item)
-                                        }
-                                    }
-                                    .swipeActions(edge: .leading) {
-                                        Button(action: {
-                                            selectedItem = item
-                                        }) {
-                                            Image(systemName: "pencil")
-                                                .foregroundColor(.white)
-                                                .padding(.vertical, 10)
-                                                .padding(.horizontal, 20)
-                                                .background(Color.blue)
-                                                .cornerRadius(8)
-                                        }
-                                    }
-                                
-                            }
-                            
-                            .onDelete(perform: listViewModel.deleteItem)
-                            .onMove(perform: listViewModel.moveItem)
-                            
-                        }
-                        .onAppear(perform: structB.decValue)
-                        .background(
-                            Group {
-                                if selectedItem != nil {
-                                    NavigationLink(
-                                        destination: EditItemView(itemToBeEdited: selectedItem!),
-                                        isActive: Binding(
-                                            get: { selectedItem != nil },
-                                            set: { isActive in
-                                                if !isActive {
-                                                    selectedItem = nil
-                                                }
-                                            }
-                                        ),
-                                        label: EmptyView.init
-                                    )
+                Text("I am planning for \(selectedIndex == 0 ? getTodayDate() : getTomorrowDate())")
+                    .font(.title)
+                    .padding()
+                List {
+                    ForEach(listViewModel.items) { item in //arrayin her bir elemanı = item
+                        ListRowView(item: item)
+                            .onTapGesture { // bir hücreye tıkladığımızda
+                                withAnimation(.linear) {
+                                    listViewModel.updateItem(item: item)
                                 }
-                                
+                                SoundManager.instance.playSound()
+
                             }
-                        )
-                        .navigationTitle("Tomorrow Todo List 📒")
-                        .navigationBarItems(
-                            leading: EditButton(),
-                            trailing: HStack {
-                                
-                                NavigationLink(destination: AddView()) {
-                                    Image(systemName: "plus")
-                                }
-                                
+                            .swipeActions(edge: .leading) {
                                 Button(action: {
-                                    isShowingAlert = true
+                                    selectedItem = item
                                 }) {
-                                    Image(systemName: "checkmark.circle.fill")
+                                    Image(systemName: "pencil")
+                                        .foregroundColor(.white)
+                                        .padding(.vertical, 10)
+                                        .padding(.horizontal, 20)
+                                        .background(Color.blue)
+                                        .cornerRadius(8)
                                 }
-                                .buttonStyle(PlainButtonStyle()) // NavigationLink özelliğini kaldırır
-                                
                             }
-                        )
-                        .alert(isPresented: $isShowingAlert) {
-                            Alert(
-                                title: Text("Günü tamamlamak istediğinize emin misiniz?"),
-                                message: Text("Bu işlem geri alınamaz"),
-                                primaryButton: .cancel(Text("İptal")),
-                                secondaryButton: .destructive(Text("Tamamla")) {
-                                    // Tamamla butonuna tıklandığında yapılacak işlemler
-                                    
-                                    scoreViewModel.scores.append(ScoreModel(dateScore: selectedIndex == 0 ? getTodayDate() : getTomorrowDate(), totalTasks: listViewModel.getCountOfItems(), doneTasks: listViewModel.getCountCompletedItems()))
-                                    scoreViewModel.saveScores()
-                                    
-                                    
-                                    print("saved")
-                                    tabSelection.selectedTab = 1
-                                    //listViewModel.items.removeAll()
-                                    
-                                    
-                                    
-                                }
+                        
+                    }
+                    
+                    .onDelete(perform: listViewModel.deleteItem)
+                    .onMove(perform: listViewModel.moveItem)
+                    
+                }
+                .onAppear(perform: structB.decValue)
+                
+                .background(
+                    Group {
+                        if selectedItem != nil {
+                            NavigationLink(
+                                destination: EditItemView(itemToBeEdited: selectedItem!),
+                                isActive: Binding(
+                                    get: { selectedItem != nil },
+                                    set: { isActive in
+                                        if !isActive {
+                                            selectedItem = nil
+                                        }
+                                    }
+                                ),
+                                label: EmptyView.init
                             )
                         }
+                        
                     }
+                )
                 
+                /*.navigationBarItems(
+                 leading: EditButton(),
+                 trailing: HStack {
+                 
+                 NavigationLink(destination: AddView()) {
+                 Image(systemName: "plus")
+                 }
+                 
+                 Button(action: {
+                 
+                 }) {
+                 
+                 }
+                 .buttonStyle(PlainButtonStyle()) // NavigationLink özelliğini kaldırır
+                 
+                 }
+                 )*/
+                .alert(isPresented: $isShowingAlert) {
+                    Alert(
+                        title: Text("Günü tamamlamak istediğinize emin misiniz?"),
+                        message: Text("Bu işlem geri alınamaz"),
+                        primaryButton: .cancel(Text("İptal")),
+                        secondaryButton: .destructive(Text("Tamamla")) {
+                            // Tamamla butonuna tıklandığında yapılacak işlemler
+                            
+                            scoreViewModel.scores.append(ScoreModel(dateScore: selectedIndex == 0 ? getTodayDate() : getTomorrowDate(), totalTasks: listViewModel.getCountOfItems(), doneTasks: listViewModel.getCountCompletedItems()))
+                            scoreViewModel.saveScores()
+                            
+                            
+                            print("saved")
+                            tabSelection.selectedTab = 1
+                            //listViewModel.items.removeAll()
+                            
+                            
+                            
+                        }
+                    )
+                }
+            }.onAppear {
+                isAnimating = true
+            }
+            
             
             
             if GlobalData.shared.value == 0 {
@@ -148,6 +156,7 @@ struct FullList: View {
                         Spacer()
                         Button(action: {
                             // Kırmızı butona tıklandığında yapılacak işlemler
+                            isShowingSheet = true
                         }) {
                             ZStack {
                                 Circle()
@@ -166,9 +175,13 @@ struct FullList: View {
                             }
                         }
                         .offset(y: -10)
+                        .sheet(isPresented: $isShowingSheet) {
+                            AddView()
+                        }
                         Spacer()
                         Button(action: {
                             // Yeşil butona tıklandığında yapılacak işlemler
+                            isShowingAlert = true
                         }) {
                             ZStack {
                                 Circle()
@@ -184,8 +197,8 @@ struct FullList: View {
                                         .multilineTextAlignment(.center)
                                         .padding()
                                         .frame(width: 90)
-                                    .lineLimit(2)
-                                   
+                                        .lineLimit(2)
+                                    
                                 }
                             }
                         }

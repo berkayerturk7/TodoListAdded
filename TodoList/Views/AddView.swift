@@ -1,5 +1,5 @@
-
 import SwiftUI
+
 
 struct AddView: View {
     
@@ -18,7 +18,7 @@ struct AddView: View {
     
     var body: some View {
         
-
+        
         ScrollView {
             VStack {
                 TextField("Type sth here.. ", text: $textFieldText)
@@ -28,19 +28,19 @@ struct AddView: View {
                     .cornerRadius(10)
                 
                 DatePicker(
-                               "Start Time",
-                               selection: $selectedStartTime,
-                               in: ...selectedEndTime, // İkinci DatePicker'ın seçilen saatine kadar olan aralık
-                               displayedComponents: .hourAndMinute
-                           )
-                         
-                           
-                           DatePicker(
-                               "End Time",
-                               selection: $selectedEndTime,
-                               in: selectedStartTime..., // İlk DatePicker'ın seçilen saatinden sonraki aralık
-                               displayedComponents: .hourAndMinute
-                           )
+                    "Start Time",
+                    selection: $selectedStartTime,
+                    in: ...selectedEndTime, // İkinci DatePicker'ın seçilen saatine kadar olan aralık
+                    displayedComponents: .hourAndMinute
+                )
+                
+                
+                DatePicker(
+                    "End Time",
+                    selection: $selectedEndTime,
+                    in: selectedStartTime..., // İlk DatePicker'ın seçilen saatinden sonraki aralık
+                    displayedComponents: .hourAndMinute
+                )
                 Picker("Select an Emoji", selection: $selectedEmoji) {
                     ForEach(emojis, id: \.self) { emoji in
                         Text(emoji)
@@ -49,21 +49,20 @@ struct AddView: View {
                 }.pickerStyle(SegmentedPickerStyle())
                 
                 Button(action: saveButtonPressed, label: {
-                        Text("Save".uppercased())
+                    Text("Save".uppercased())
                         .foregroundColor(.white)
                         .font(.headline)
                         .frame(height: 55)
                         .frame(maxWidth: .infinity)
                         .background(Color.accentColor)
                         .cornerRadius(10)
-
+                    
                 })
-               
-                           
+                
+                
             }
             .padding(14)
         }
-        //.onAppear(perform: structC.incValue) bakılacak!
         .navigationTitle("Add an item 🖊️ ")
         .alert(isPresented: $showAlert, content: getAlert)
     }
@@ -109,6 +108,6 @@ struct AddView_Previews: PreviewProvider {
             
         }
         
-      
+        
     }
 }
