@@ -1,10 +1,3 @@
-//
-//  LogoView.swift
-//  TodoList
-//
-//  Created by Berkay Ertürk on 9.07.2023.
-//
-
 import SwiftUI
 
 struct LogoView: View {
@@ -42,7 +35,7 @@ struct LogoView: View {
                     }
                 }
             
-            Text("TODO")
+            Text("TODOMORROW")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundColor(.secondaryAccentColor)

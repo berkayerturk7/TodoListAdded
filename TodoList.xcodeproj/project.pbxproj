@@ -25,14 +25,16 @@
 		A95E67162A43A6AD0027D467 /* ItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E67152A43A6AD0027D467 /* ItemModel.swift */; };
 		A95E671B2A43AE560027D467 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E671A2A43AE560027D467 /* ListViewModel.swift */; };
 		A95E671D2A43D4BB0027D467 /* NoItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E671C2A43D4BB0027D467 /* NoItemsView.swift */; };
+		A96CFF622A5C9D5B00E809F1 /* OpeningVieww.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96CFF612A5C9D5B00E809F1 /* OpeningVieww.swift */; };
 		A9BE502E2A51EC5500885641 /* TabSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BE502D2A51EC5500885641 /* TabSelection.swift */; };
 		A9BE50302A51ECE000885641 /* FullListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BE502F2A51ECE000885641 /* FullListView.swift */; };
 		A9CB88E82A5A1A4500EF2E37 /* GlobalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CB88E72A5A1A4500EF2E37 /* GlobalData.swift */; };
-		A9CB88EA2A5A2D4A00EF2E37 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CB88E92A5A2D4A00EF2E37 /* ContentView.swift */; };
+		A9CB88EA2A5A2D4A00EF2E37 /* ShareLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CB88E92A5A2D4A00EF2E37 /* ShareLinkView.swift */; };
 		A9CB88EC2A5A464300EF2E37 /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CB88EB2A5A464300EF2E37 /* LogoView.swift */; };
 		A9CB88EE2A5A4B5200EF2E37 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CB88ED2A5A4B5200EF2E37 /* Color+Extension.swift */; };
 		A9CB88F52A5B39B900EF2E37 /* sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A9CB88F42A5B39B900EF2E37 /* sound.mp3 */; };
 		A9CB88F72A5B425800EF2E37 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CB88F62A5B425800EF2E37 /* SoundManager.swift */; };
+		A9CB88FB2A5B715100EF2E37 /* TimeLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CB88FA2A5B715100EF2E37 /* TimeLineView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,14 +59,16 @@
 		A95E671A2A43AE560027D467 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		A95E671C2A43D4BB0027D467 /* NoItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoItemsView.swift; sourceTree = "<group>"; };
 		A95E67202A43E38B0027D467 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A96CFF612A5C9D5B00E809F1 /* OpeningVieww.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningVieww.swift; sourceTree = "<group>"; };
 		A9BE502D2A51EC5500885641 /* TabSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelection.swift; sourceTree = "<group>"; };
 		A9BE502F2A51ECE000885641 /* FullListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullListView.swift; sourceTree = "<group>"; };
 		A9CB88E72A5A1A4500EF2E37 /* GlobalData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalData.swift; sourceTree = "<group>"; };
-		A9CB88E92A5A2D4A00EF2E37 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A9CB88E92A5A2D4A00EF2E37 /* ShareLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareLinkView.swift; sourceTree = "<group>"; };
 		A9CB88EB2A5A464300EF2E37 /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
 		A9CB88ED2A5A4B5200EF2E37 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		A9CB88F42A5B39B900EF2E37 /* sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sound.mp3; sourceTree = "<group>"; };
 		A9CB88F62A5B425800EF2E37 /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
+		A9CB88FA2A5B715100EF2E37 /* TimeLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,16 +127,18 @@
 			isa = PBXGroup;
 			children = (
 				A95E670D2A4257A10027D467 /* ListView.swift */,
-				A9CB88E92A5A2D4A00EF2E37 /* ContentView.swift */,
+				A9CB88E92A5A2D4A00EF2E37 /* ShareLinkView.swift */,
 				A9424F0B2A58C5B600798381 /* ButtonView.swift */,
 				A94584702A493A3900573545 /* StatisticsView.swift */,
 				A945846E2A4908AC00573545 /* SettingsView.swift */,
 				A94584662A48FC5200573545 /* OpeningView.swift */,
+				A96CFF612A5C9D5B00E809F1 /* OpeningVieww.swift */,
 				A95E671C2A43D4BB0027D467 /* NoItemsView.swift */,
 				A95E670F2A4258DA0027D467 /* ListRowView.swift */,
 				A95E67112A425A1F0027D467 /* AddView.swift */,
 				A933DEAA2A4795DF00310EC6 /* EditItemView.swift */,
 				A9BE502F2A51ECE000885641 /* FullListView.swift */,
+				A9CB88FA2A5B715100EF2E37 /* TimeLineView.swift */,
 				A9CB88EB2A5A464300EF2E37 /* LogoView.swift */,
 			);
 			path = Views;
@@ -255,11 +261,13 @@
 				A9CB88EC2A5A464300EF2E37 /* LogoView.swift in Sources */,
 				A94584692A4901C500573545 /* UserModel.swift in Sources */,
 				A9424F0C2A58C5B600798381 /* ButtonView.swift in Sources */,
-				A9CB88EA2A5A2D4A00EF2E37 /* ContentView.swift in Sources */,
+				A9CB88FB2A5B715100EF2E37 /* TimeLineView.swift in Sources */,
+				A9CB88EA2A5A2D4A00EF2E37 /* ShareLinkView.swift in Sources */,
 				A95E671B2A43AE560027D467 /* ListViewModel.swift in Sources */,
 				A9CB88EE2A5A4B5200EF2E37 /* Color+Extension.swift in Sources */,
 				A959CAEB2A4FB96C007392D0 /* ScoreViewModel.swift in Sources */,
 				A94584712A493A3900573545 /* StatisticsView.swift in Sources */,
+				A96CFF622A5C9D5B00E809F1 /* OpeningVieww.swift in Sources */,
 				A95E66FE2A4255780027D467 /* TodoListApp.swift in Sources */,
 				A9CB88F72A5B425800EF2E37 /* SoundManager.swift in Sources */,
 				A95E670E2A4257A10027D467 /* ListView.swift in Sources */,

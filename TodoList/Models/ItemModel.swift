@@ -2,7 +2,7 @@ import Foundation
 
 //Immutable Struct -> Tum struct degiskenleri let. Sadece updateCompletion fonksiyonu gunceli dondurebilir
 
-struct ItemModel: Identifiable,Codable {
+struct ItemModel: Identifiable,Codable, Equatable {
     
     let id: String
     let title: String

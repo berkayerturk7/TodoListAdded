@@ -1,6 +1,6 @@
 import Foundation
 
-struct ScoreModel: Identifiable, Codable {
+struct ScoreModel: Identifiable, Codable, Hashable {
     
     let id: String
     let dateScore: String

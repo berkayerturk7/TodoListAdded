@@ -22,8 +22,8 @@ struct FullList: View {
     var body: some View {
         
         ZStack(alignment: .top) {
-     
-            VStack {
+            
+            VStack(spacing: 0) {
                 LogoView()
                 Picker(selection: $selectedIndex, label: Text("Tarih")) {
                     Text(getTodayDate()).tag(0)
@@ -32,9 +32,15 @@ struct FullList: View {
                 .pickerStyle(SegmentedPickerStyle())
                 
                 Text("I am planning for \(selectedIndex == 0 ? getTodayDate() : getTomorrowDate())")
-                    .font(.title)
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
                     .padding()
+                    .cornerRadius(8)
+                    .background(Color.secondaryAccentColor)
+                
                 List {
+                    
                     ForEach(listViewModel.items) { item in //arrayin her bir elemanı = item
                         ListRowView(item: item)
                             .onTapGesture { // bir hücreye tıkladığımızda
@@ -42,7 +48,7 @@ struct FullList: View {
                                     listViewModel.updateItem(item: item)
                                 }
                                 SoundManager.instance.playSound()
-
+                                
                             }
                             .swipeActions(edge: .leading) {
                                 Button(action: {
@@ -63,8 +69,10 @@ struct FullList: View {
                     .onMove(perform: listViewModel.moveItem)
                     
                 }
-                .onAppear(perform: structB.decValue)
                 
+                
+                .onAppear(perform: structB.decValue)
+                .listStyle(PlainListStyle())
                 .background(
                     Group {
                         if selectedItem != nil {
@@ -84,24 +92,6 @@ struct FullList: View {
                         
                     }
                 )
-                
-                /*.navigationBarItems(
-                 leading: EditButton(),
-                 trailing: HStack {
-                 
-                 NavigationLink(destination: AddView()) {
-                 Image(systemName: "plus")
-                 }
-                 
-                 Button(action: {
-                 
-                 }) {
-                 
-                 }
-                 .buttonStyle(PlainButtonStyle()) // NavigationLink özelliğini kaldırır
-                 
-                 }
-                 )*/
                 .alert(isPresented: $isShowingAlert) {
                     Alert(
                         title: Text("Günü tamamlamak istediğinize emin misiniz?"),
@@ -126,9 +116,6 @@ struct FullList: View {
             }.onAppear {
                 isAnimating = true
             }
-            
-            
-            
             if GlobalData.shared.value == 0 {
                 VStack {
                     Spacer()

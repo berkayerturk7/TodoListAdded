@@ -29,7 +29,7 @@ struct EditItemView: View {
     @State var selectedEndTime = Date()
     private let calendar = Calendar.current
     @State private var selectedEmoji = "🎉"
-    let emojis = ["😊", "🎉", "🌞", "🐶", "🍕"]
+    let emojis = ["▪︎", "🍳", "💪", "👯", "🍕"]
     let structA = StructA()
     
     var body: some View {
@@ -62,7 +62,11 @@ struct EditItemView: View {
                         Text(emoji)
                             .font(.largeTitle)
                     }
-                }.pickerStyle(SegmentedPickerStyle())
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .onChange(of: selectedEmoji) { _ in
+                        updateTextFieldText()
+                    }
                 
                 Button(action: saveButtonPressed, label: {
                     Text("Save".uppercased())
@@ -82,6 +86,24 @@ struct EditItemView: View {
         .navigationTitle("Add an item 🖊️ ")
         .alert(isPresented: $showAlert, content: getAlert)
     }
+    
+    func updateTextFieldText() {
+       if selectedEmoji == "🍳" {
+           textFieldText = "Nice breakfast time!"
+       }
+       else if selectedEmoji == "💪" {
+           textFieldText = "Training time!"
+       }
+       else if selectedEmoji == "🍕" {
+           textFieldText = "Mealtime"
+       }
+       else if selectedEmoji == "👯" {
+           textFieldText = "Date with "
+       }
+       else {
+           textFieldText = "" // Diğer emojiler için metin alanını temizleme
+       }
+   }
     
     func saveButtonPressed() {
        

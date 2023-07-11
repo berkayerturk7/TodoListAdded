@@ -1,5 +1,5 @@
 import Foundation
-
+import SwiftUI
 /*
  CRUD FUNCTIONS
  
@@ -48,8 +48,8 @@ class ListViewModel: ObservableObject {
     }
     
     func deleteItem(indexSet: IndexSet) {
-        items.remove(atOffsets: indexSet)
-    }
+            items.remove(atOffsets: indexSet)
+        }
     
     func moveItem(from:IndexSet, to: Int) {
         items.move(fromOffsets: from, toOffset: to)

@@ -20,7 +20,7 @@ struct TodoListApp: App {
         WindowGroup {
             NavigationView {
                 OpeningView()
-                
+               
             }
           // entire app navigation view da olsun
             .environmentObject(listViewModel)
