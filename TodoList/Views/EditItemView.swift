@@ -11,6 +11,7 @@ struct EditItemView: View {
     
     var itemToBeEdited: ItemModel
     
+    
     init(itemToBeEdited: ItemModel) {
             self.itemToBeEdited = itemToBeEdited
             _textFieldText = State(initialValue: itemToBeEdited.title)
@@ -29,8 +30,10 @@ struct EditItemView: View {
     @State var selectedEndTime = Date()
     private let calendar = Calendar.current
     @State private var selectedEmoji = "🎉"
-    let emojis = ["▪︎", "🍳", "💪", "👯", "🍕"]
+    let emojis = ["▪︎", "🍳", "💪", "👯", "🍕", "📚"]
     let structA = StructA()
+    
+    @State private var importanceLevel = 3
     
     var body: some View {
         
@@ -68,6 +71,9 @@ struct EditItemView: View {
                         updateTextFieldText()
                     }
                 
+                Text("Importance Level").bold()
+                ExclamationRatingView(rating: $importanceLevel)
+                
                 Button(action: saveButtonPressed, label: {
                     Text("Save".uppercased())
                         .foregroundColor(.white)
@@ -79,7 +85,7 @@ struct EditItemView: View {
                     
                 })
                 
-                
+                TimeLineView()
             }
             .padding(14)
         }
@@ -100,16 +106,23 @@ struct EditItemView: View {
        else if selectedEmoji == "👯" {
            textFieldText = "Date with "
        }
+       else if selectedEmoji == "📚" {
+            textFieldText = "Study"
+            withAnimation {
+                importanceLevel  = 5
+            }
+        }
        else {
            textFieldText = "" // Diğer emojiler için metin alanını temizleme
        }
    }
     
+    
+    
     func saveButtonPressed() {
-       
         if textIsAppropriate() {
            listViewModel.items.removeAll { $0.id == itemToBeEdited.id }
-           listViewModel.addItem(title: textFieldText, startTime: selectedStartTime, endTime: selectedEndTime, emoji: selectedEmoji)
+            listViewModel.addItem(title: textFieldText, startTime: selectedStartTime, endTime: selectedEndTime, emoji: selectedEmoji, userDayPoint: importanceLevel)
             print("x")
 
             presentationMode.wrappedValue.dismiss()
@@ -122,7 +135,59 @@ struct EditItemView: View {
             showAlert.toggle() // alert goster, kullanıcı kapatınca kapansın
             return false
         }
-        return true
+        else if !slotIsAppropriate(selectedStartTime: selectedStartTime, selectedEndTime: selectedEndTime) {
+            alertTitle = "There is another event in your todo list in that range!! 🙌"
+            showAlert.toggle() // alert goster, kullanıcı kapatınca kapansın
+            return false
+        }
+        else {
+            return true
+        }
+    }
+    
+    func emptyTimeSlots() -> [TimeSlot] {
+        let sortedItems = listViewModel.items.sorted { $0.startTime < $1.startTime }
+        var emptySlots: [TimeSlot] = []
+        
+        var previousEndTime = calendar.startOfDay(for: Date())
+
+        for item in sortedItems {
+            if item.startTime > previousEndTime {
+                let slotDuration = calendar.dateComponents([.minute], from: previousEndTime, to: item.startTime)
+                if slotDuration.minute ?? 0 >= 30 {
+                    let emptySlot = TimeSlot(startTime: previousEndTime, endTime: item.startTime)
+                    emptySlots.append(emptySlot)
+                }
+            }
+            
+            previousEndTime = item.endTime
+        }
+        
+        let endOfDay = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: previousEndTime)!
+        
+        if previousEndTime < endOfDay {
+            let slotDuration = calendar.dateComponents([.minute], from: previousEndTime, to: endOfDay)
+            if slotDuration.minute ?? 0 >= 30 {
+                let emptySlot = TimeSlot(startTime: previousEndTime, endTime: endOfDay)
+                emptySlots.append(emptySlot)
+            }
+        }
+        
+        return emptySlots
+    }
+    
+    func slotIsAppropriate(selectedStartTime: Date, selectedEndTime: Date) -> Bool {
+        let selectedSlot = TimeSlot(startTime: selectedStartTime, endTime: selectedEndTime)
+        let emptySlots = emptyTimeSlots()
+        
+        for emptySlot in emptySlots {
+            print(emptySlot)
+           if selectedSlot.startTime >= emptySlot.startTime && selectedSlot.endTime <= emptySlot.endTime {
+                return true
+            }
+        }
+        
+        return false
     }
     
     func getAlert() -> Alert {
@@ -135,6 +200,6 @@ struct EditItemView: View {
 
 struct EditItemView_Previews: PreviewProvider {
     static var previews: some View {
-        EditItemView(itemToBeEdited: ItemModel.init(title: "", isCompleted: false, startTime: Date(), endTime: Date(), emoji: ""))
+        EditItemView(itemToBeEdited: ItemModel.init(title: "", isCompleted: false, startTime: Date(), endTime: Date(), emoji: "", userItemPoint: 0))
     }
 }

@@ -35,11 +35,21 @@ struct LogoView: View {
                     }
                 }
             
-            Text("TODOMORROW")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .foregroundColor(.secondaryAccentColor)
-                .padding(.bottom, 10)
+            HStack(spacing: 0) {
+                Text("TO")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundColor(.secondaryAccentColor)
+                Text("DO")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundColor(.gray)
+                Text("MORROW")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundColor(.secondaryAccentColor)
+                
+            }.padding(.bottom, 10)
         }
     }
 }

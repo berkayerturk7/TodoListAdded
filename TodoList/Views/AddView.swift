@@ -10,29 +10,32 @@ struct AddView: View {
     @State var alertTitle: String = ""
     @State var showAlert: Bool = false
     
+    
     @State var selectedStartTime: Date
     @State var selectedEndTime: Date
     
     private let calendar = Calendar.current
     @State private var selectedEmoji = "🍳"
-    let emojis = ["▪︎", "🍳", "💪", "👯", "🍕"]
+    let emojis = ["▪︎", "🍳", "💪", "👯", "🍕", "📚"]
     let structC = StructC()
     
+    @State var importanceLevel = 3
+    
     // Başlangıç değerleri
-    // selectedStartTime = bugünün 1 gün sonraki sabah
-    // selectedEndTime = selectedStartTime +1 saat
+    // selectedStartTime = bulunduğum günün sabah
+    // selectedEndTime = bulunduğum günün sabahı +1 Saat
     init() {
             let calendar = Calendar.current
             var components = DateComponents()
-            components.day = 1
+            components.day = 0
             components.hour = 8
             components.minute = 0
             
-            let tomorrowMorning = calendar.date(byAdding: components, to: calendar.startOfDay(for: Date())) ?? Date()
-            let tomorrowEnd = calendar.date(byAdding: .hour, value: 1, to: tomorrowMorning) ?? Date()
+            let todayMorning = calendar.date(byAdding: components, to: calendar.startOfDay(for: Date())) ?? Date()
+            let todayEnd = calendar.date(byAdding: .hour, value: 1, to: todayMorning) ?? Date()
             
-            _selectedStartTime = State(initialValue: tomorrowMorning)
-            _selectedEndTime = State(initialValue: tomorrowEnd)
+            _selectedStartTime = State(initialValue: todayMorning)
+            _selectedEndTime = State(initialValue: todayEnd)
         }
     
     var body: some View {
@@ -71,6 +74,9 @@ struct AddView: View {
                         updateTextFieldText()
                     }
                 
+                Text("Importance Level").bold()
+                ExclamationRatingView(rating: $importanceLevel)
+                
                 Button(action: saveButtonPressed, label: {
                     Text("Save".uppercased())
                         .foregroundColor(.white)
@@ -95,16 +101,32 @@ struct AddView: View {
      func updateTextFieldText() {
         if selectedEmoji == "🍳" {
             textFieldText = "Nice breakfast time!"
+            withAnimation {
+                importanceLevel  = 2
+            }
+            
         }
         else if selectedEmoji == "💪" {
             textFieldText = "Training time!"
+            withAnimation {
+                importanceLevel  = 4
+            }
         }
         else if selectedEmoji == "🍕" {
             textFieldText = "Mealtime"
+            withAnimation {
+                importanceLevel  = 2
+            }
         }
         else if selectedEmoji == "👯" {
             textFieldText = "Date with "
         }
+         else if selectedEmoji == "📚" {
+             textFieldText = "Study"
+             withAnimation {
+                 importanceLevel  = 5
+             }
+         }
         else {
             textFieldText = "" // Diğer emojiler için metin alanını temizleme
         }
@@ -113,7 +135,7 @@ struct AddView: View {
     
     func saveButtonPressed() {
         if textIsAppropriate() {
-            listViewModel.addItem(title: textFieldText, startTime: selectedStartTime, endTime: selectedEndTime, emoji: selectedEmoji)
+            listViewModel.addItem(title: textFieldText, startTime: selectedStartTime, endTime: selectedEndTime, emoji: selectedEmoji, userDayPoint: importanceLevel)
             presentationMode.wrappedValue.dismiss()
         }
     }
@@ -141,7 +163,7 @@ struct AddView: View {
         var emptySlots: [TimeSlot] = []
         
         var previousEndTime = calendar.startOfDay(for: Date())
-        
+
         for item in sortedItems {
             if item.startTime > previousEndTime {
                 let slotDuration = calendar.dateComponents([.minute], from: previousEndTime, to: item.startTime)
@@ -172,7 +194,7 @@ struct AddView: View {
         let emptySlots = emptyTimeSlots()
         
         for emptySlot in emptySlots {
-
+            print(emptySlot)
            if selectedSlot.startTime >= emptySlot.startTime && selectedSlot.endTime <= emptySlot.endTime {
                 return true
             }

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A9238C6B2A61B72400DB7284 /* StartDayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9238C6A2A61B72400DB7284 /* StartDayButton.swift */; };
+		A9238C6D2A61B87100DB7284 /* AddTaskButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9238C6C2A61B87100DB7284 /* AddTaskButton.swift */; };
+		A9238C6F2A61FDBD00DB7284 /* ExclamationRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9238C6E2A61FDBD00DB7284 /* ExclamationRatingView.swift */; };
 		A933DEAB2A4795DF00310EC6 /* EditItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A933DEAA2A4795DF00310EC6 /* EditItemView.swift */; };
 		A9424F0C2A58C5B600798381 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9424F0B2A58C5B600798381 /* ButtonView.swift */; };
 		A94584672A48FC5200573545 /* OpeningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94584662A48FC5200573545 /* OpeningView.swift */; };
@@ -38,6 +41,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A9238C6A2A61B72400DB7284 /* StartDayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDayButton.swift; sourceTree = "<group>"; };
+		A9238C6C2A61B87100DB7284 /* AddTaskButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskButton.swift; sourceTree = "<group>"; };
+		A9238C6E2A61FDBD00DB7284 /* ExclamationRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExclamationRatingView.swift; sourceTree = "<group>"; };
 		A933DEAA2A4795DF00310EC6 /* EditItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemView.swift; sourceTree = "<group>"; };
 		A9424F0B2A58C5B600798381 /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		A94584662A48FC5200573545 /* OpeningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpeningView.swift; sourceTree = "<group>"; };
@@ -129,6 +135,8 @@
 				A95E670D2A4257A10027D467 /* ListView.swift */,
 				A9CB88E92A5A2D4A00EF2E37 /* ShareLinkView.swift */,
 				A9424F0B2A58C5B600798381 /* ButtonView.swift */,
+				A9238C6A2A61B72400DB7284 /* StartDayButton.swift */,
+				A9238C6C2A61B87100DB7284 /* AddTaskButton.swift */,
 				A94584702A493A3900573545 /* StatisticsView.swift */,
 				A945846E2A4908AC00573545 /* SettingsView.swift */,
 				A94584662A48FC5200573545 /* OpeningView.swift */,
@@ -140,6 +148,7 @@
 				A9BE502F2A51ECE000885641 /* FullListView.swift */,
 				A9CB88FA2A5B715100EF2E37 /* TimeLineView.swift */,
 				A9CB88EB2A5A464300EF2E37 /* LogoView.swift */,
+				A9238C6E2A61FDBD00DB7284 /* ExclamationRatingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -265,6 +274,7 @@
 				A9CB88EA2A5A2D4A00EF2E37 /* ShareLinkView.swift in Sources */,
 				A95E671B2A43AE560027D467 /* ListViewModel.swift in Sources */,
 				A9CB88EE2A5A4B5200EF2E37 /* Color+Extension.swift in Sources */,
+				A9238C6D2A61B87100DB7284 /* AddTaskButton.swift in Sources */,
 				A959CAEB2A4FB96C007392D0 /* ScoreViewModel.swift in Sources */,
 				A94584712A493A3900573545 /* StatisticsView.swift in Sources */,
 				A96CFF622A5C9D5B00E809F1 /* OpeningVieww.swift in Sources */,
@@ -275,6 +285,8 @@
 				A9BE502E2A51EC5500885641 /* TabSelection.swift in Sources */,
 				A933DEAB2A4795DF00310EC6 /* EditItemView.swift in Sources */,
 				A95E671D2A43D4BB0027D467 /* NoItemsView.swift in Sources */,
+				A9238C6F2A61FDBD00DB7284 /* ExclamationRatingView.swift in Sources */,
+				A9238C6B2A61B72400DB7284 /* StartDayButton.swift in Sources */,
 				A9CB88E82A5A1A4500EF2E37 /* GlobalData.swift in Sources */,
 				A945846F2A4908AC00573545 /* SettingsView.swift in Sources */,
 				A95E67102A4258DA0027D467 /* ListRowView.swift in Sources */,

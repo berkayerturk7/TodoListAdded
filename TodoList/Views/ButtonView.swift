@@ -8,7 +8,6 @@ struct ButtonView: View {
         TabView {
             ZStack(alignment: .top) {
                 NavigationView {
-                    
                     List(1...10, id: \.self) { index in
                         Text("List Item \(index)")
                     }
@@ -23,18 +22,17 @@ struct ButtonView: View {
                             // İlk butona tıklandığında yapılacak işlemler
                         }) {
                             ZStack {
-                                Circle()
-                                    .foregroundColor(.blue)
-                                    .frame(width: 90, height: 90)
-                                    .shadow(color: animate ? secondaryAccentColor.opacity(0.7) : Color.blue.opacity(0.7), radius: animate ? 30 : 5, x: 0, y: animate ? 50 : 2)
+                                RoundedRectangle(cornerRadius: 15)
+                                    .foregroundColor(secondaryAccentColor)
+                                    .frame(width: 120, height: 50)
+                                    .shadow(color: animate ? secondaryAccentColor.opacity(0.7) : secondaryAccentColor.opacity(0.3), radius: animate ? 30 : 5, x: 0, y: animate ? 50 : 2)
                                 
                                 Text("Start Day")
-                                    .font(.caption)
-                                    .bold()
+                                    .font(.system(size: 12, weight: .semibold))
                                     .foregroundColor(.white)
                                     .multilineTextAlignment(.center)
-                                    .padding()
-                                    .frame(width: 90)
+                                    .padding(8)
+                                    .frame(width: 100)
                                     .lineLimit(2)
                             }
                         }
@@ -43,18 +41,17 @@ struct ButtonView: View {
                             // Kırmızı butona tıklandığında yapılacak işlemler
                         }) {
                             ZStack {
-                                Circle()
-                                    .foregroundColor(.red)
-                                    .frame(width: 90, height: 90)
-                                    .shadow(color: animate ? secondaryAccentColor.opacity(0.7) : Color.red.opacity(0.7), radius: animate ? 30 : 5, x: 0, y: animate ? 50 : 2)
+                                RoundedRectangle(cornerRadius: 15)
+                                    .foregroundColor(secondaryAccentColor)
+                                    .frame(width: 120, height: 50)
+                                    .shadow(color: animate ? secondaryAccentColor.opacity(0.7) : secondaryAccentColor.opacity(0.3), radius: animate ? 30 : 5, x: 0, y: animate ? 50 : 2)
                                 
                                 Text("See Schedule")
-                                    .font(.caption)
-                                    .bold()
+                                    .font(.system(size: 12, weight: .semibold))
                                     .foregroundColor(.white)
                                     .multilineTextAlignment(.center)
-                                    .padding()
-                                    .frame(width: 90)
+                                    .padding(8)
+                                    .frame(width: 100)
                                     .lineLimit(2)
                             }
                         }
@@ -64,18 +61,17 @@ struct ButtonView: View {
                             // Yeşil butona tıklandığında yapılacak işlemler
                         }) {
                             ZStack {
-                                Circle()
-                                    .foregroundColor(.green)
-                                    .frame(width: 90, height: 90)
-                                    .shadow(color: animate ? secondaryAccentColor.opacity(0.7) : Color.green.opacity(0.7), radius: animate ? 30 : 5, x: 0, y: animate ? 50 : 2)
+                                RoundedRectangle(cornerRadius: 15)
+                                    .foregroundColor(secondaryAccentColor)
+                                    .frame(width: 120, height: 50)
+                                    .shadow(color: animate ? secondaryAccentColor.opacity(0.7) : secondaryAccentColor.opacity(0.3), radius: animate ? 30 : 5, x: 0, y: animate ? 50 : 2)
                                 
                                 Text("Complete Day")
-                                    .font(.caption)
-                                    .bold()
+                                    .font(.system(size: 12, weight: .semibold))
                                     .foregroundColor(.white)
                                     .multilineTextAlignment(.center)
-                                    .padding()
-                                    .frame(width: 90)
+                                    .padding(8)
+                                    .frame(width: 100)
                                     .lineLimit(2)
                             }
                         }
@@ -106,6 +102,7 @@ struct ButtonView: View {
         }
     }
 }
+
 struct ButtonView_Previews: PreviewProvider {
     static var previews: some View {
         ButtonView()

@@ -16,6 +16,12 @@ struct FullList: View {
     let structB = StructB()
     @State private var isShowingSheet = false
     @State private var isAnimating = false
+    // Add Task Button
+    @State private var animateAddTask: Bool = false
+    @State private var scale: CGFloat = 1.3
+    
+    
+    
     
     var soundManager = SoundManager()
     
@@ -113,20 +119,22 @@ struct FullList: View {
                         }
                     )
                 }
-            }.onAppear {
+            }
+
+            .onAppear {
                 isAnimating = true
             }
             if GlobalData.shared.value == 0 {
                 VStack {
                     Spacer()
-                    HStack {
-                        Spacer()
+                    VStack(spacing: -6) {
+                       
                         Button(action: {
                             // İlk butona tıklandığında yapılacak işlemler
                         }) {
-                            ZStack {
+                            /*ZStack {
                                 Circle()
-                                    .foregroundColor(.blue)
+                                    .foregroundColor(.secondaryAccentColor)
                                     .frame(width: 90, height: 90)
                                     .shadow(color: animate ? secondaryAccentColor.opacity(0.7) : Color.blue.opacity(0.7), radius: animate ? 30 : 5, x: 0, y: animate ? 50 : 2)
                                 
@@ -138,73 +146,84 @@ struct FullList: View {
                                     .padding()
                                     .frame(width: 90)
                                     .lineLimit(2)
-                            }
+                            }*/
                         }
-                        Spacer()
+                       
                         Button(action: {
                             // Kırmızı butona tıklandığında yapılacak işlemler
                             isShowingSheet = true
                         }) {
+                            // MARK: Add Task
                             ZStack {
                                 Circle()
-                                    .foregroundColor(.red)
-                                    .frame(width: 90, height: 90)
-                                    .shadow(color: animate ? secondaryAccentColor.opacity(0.7) : Color.red.opacity(0.7), radius: animate ? 30 : 5, x: 0, y: animate ? 50 : 2)
-                                
-                                Text("Add Task ➕")
-                                    .font(.caption)
-                                    .bold()
+                                    .foregroundColor(.secondaryAccentColor)
+                                    .frame(width: 65, height: 65)
+                                    .overlay(
+                                        Circle()
+                                            .stroke(Color.red.opacity(0.4), lineWidth: 5)
+                                            .blur(radius: 4)
+                                            .offset(x: 2, y: 2)
+                                            .mask(Circle().fill(LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .topTrailing, endPoint: .bottomLeading)))
+                                            .shadow(color: Color.red.opacity(0.4), radius: 8, x: 0, y: 0)
+                                    )
+                                    .overlay(
+                                        Circle()
+                                            .stroke(Color.red.opacity(0.2), lineWidth: 8)
+                                            .blur(radius: 4)
+                                            .offset(x: -2, y: -2)
+                                            .mask(Circle().fill(LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .topLeading, endPoint: .bottomTrailing)))
+                                            .shadow(color: Color.red.opacity(0.4), radius: 8, x: 0, y: 0)
+                                    )
+                                    .shadow(color: Color.red.opacity(0.4), radius: 8, x: 0, y: 0) // Dış çevreye gölge ekle
+                                Text("+")
+                                    .font(.system(size: 55, weight: .light))
                                     .foregroundColor(.white)
-                                    .multilineTextAlignment(.center)
-                                    .padding()
-                                    .frame(width: 90)
-                                    .lineLimit(2)
+                                    .offset(y: -3) // + simgesini yukarı doğru hafifçe kaydır
                             }
                         }
+                        
+                        .scaleEffect(scale)
+                        .animation(Animation.easeInOut(duration: 1.1).repeatForever(autoreverses: true), value: scale)
+                        .onAppear(perform: addAddTaskAnimation)
                         .offset(y: -10)
+                        .buttonStyle(PlainButtonStyle())
                         .sheet(isPresented: $isShowingSheet) {
                             AddView()
                         }
-                        Spacer()
+                        
                         Button(action: {
                             // Yeşil butona tıklandığında yapılacak işlemler
                             isShowingAlert = true
                         }) {
                             ZStack {
-                                Circle()
-                                    .foregroundColor(.green)
-                                    .frame(width: 90, height: 90)
+                                RoundedRectangle(cornerRadius: 15)
+                                    .foregroundColor(secondaryAccentColor)
+                                    .frame(width: 170, height: 30)
                                     .shadow(color: animate ? secondaryAccentColor.opacity(0.7) : Color.green.opacity(0.7), radius: animate ? 30 : 5, x: 0, y: animate ? 50 : 2)
                                 
                                 HStack {
-                                    Text("Complete Day ✅")
-                                        .font(.caption)
-                                        .bold()
+                                    Text("Complete Day")
+                                        .font(.system(size: 14, weight: .bold)) // Font boyutunu düzenle
                                         .foregroundColor(.white)
-                                        .multilineTextAlignment(.center)
                                         .padding()
-                                        .frame(width: 90)
-                                        .lineLimit(2)
-                                    
+                                        //.frame(maxWidth: .infinity) // İçeriği butona sığdırmak için maksimum genişlik ayarla
                                 }
                             }
+
                         }
-                        Spacer()
+                        
                     }
+                    
                     .padding(.bottom, 16)
                 }
             }
             //
-        }.onAppear(perform: addAnimation)
+        }
     }
     
-    
-    // 3lü buton animasyonu
-    func addAnimation() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            withAnimation(Animation.easeInOut(duration: 2.0).repeatForever()) {
-                animate.toggle()
-            }
+    func addAddTaskAnimation() {
+        withAnimation(Animation.easeInOut(duration: 1.1).repeatForever(autoreverses: true)) {
+            scale = 0.95
         }
     }
     

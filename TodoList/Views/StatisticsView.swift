@@ -17,9 +17,10 @@ struct StatisticsView: View {
                                 Text("Date: \(score.dateScore)")
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
-                                Text("Total Tasks")
+                                Text("Done Tasks: \(score.doneTasks)")
+                                Text("Total Tasks: \(score.totalTasks)")
                                     .font(.headline)
-                                Text("Done Tasks")
+                                
                             }
                             .padding(10)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -29,12 +30,12 @@ struct StatisticsView: View {
                             ZStack {
                                 Circle()
                                     .trim(from: 0, to: CGFloat(score.doneTasks) / CGFloat(score.totalTasks))
-                                    .stroke(Color.green, lineWidth: 20)
+                                    .stroke(Color.secondaryAccentColor, lineWidth: 10)
                                     .rotationEffect(Angle(degrees: -90))
-                                    .frame(width: 100, height: 100)
+                                    .frame(width: 80, height: 80)
                                     .overlay(
                                         Circle()
-                                            .stroke(Color.gray.opacity(0.2), lineWidth: 20)
+                                            .stroke(Color.gray.opacity(0.2), lineWidth: 10)
                                     )
                                     .foregroundColor(.clear)
                                     
@@ -68,14 +69,6 @@ struct StatisticsView: View {
         }
     }
 }
-
-
-
-
-
-
-
-
 
 
 struct StatisticsView_Previews: PreviewProvider {
