@@ -1,8 +1,6 @@
 import SwiftUI
 
-
 struct AddView: View {
-    
     
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var listViewModel: ListViewModel
@@ -25,18 +23,18 @@ struct AddView: View {
     // selectedStartTime = bulunduğum günün sabah
     // selectedEndTime = bulunduğum günün sabahı +1 Saat
     init() {
-            let calendar = Calendar.current
-            var components = DateComponents()
-            components.day = 0
-            components.hour = 8
-            components.minute = 0
-            
-            let todayMorning = calendar.date(byAdding: components, to: calendar.startOfDay(for: Date())) ?? Date()
-            let todayEnd = calendar.date(byAdding: .hour, value: 1, to: todayMorning) ?? Date()
-            
-            _selectedStartTime = State(initialValue: todayMorning)
-            _selectedEndTime = State(initialValue: todayEnd)
-        }
+        let calendar = Calendar.current
+        var components = DateComponents()
+        components.day = 0
+        components.hour = 8
+        components.minute = 0
+        
+        let todayMorning = calendar.date(byAdding: components, to: calendar.startOfDay(for: Date())) ?? Date()
+        let todayEnd = calendar.date(byAdding: .hour, value: 1, to: todayMorning) ?? Date()
+        
+        _selectedStartTime = State(initialValue: todayMorning)
+        _selectedEndTime = State(initialValue: todayEnd)
+    }
     
     var body: some View {
         
@@ -71,8 +69,8 @@ struct AddView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .onChange(of: selectedEmoji) { _ in
-                        updateTextFieldText()
-                    }
+                    updateTextFieldText()
+                }
                 
                 Text("Importance Level").bold()
                 ExclamationRatingView(rating: $importanceLevel)
@@ -98,7 +96,7 @@ struct AddView: View {
         .alert(isPresented: $showAlert, content: getAlert)
     }
     
-     func updateTextFieldText() {
+    func updateTextFieldText() {
         if selectedEmoji == "🍳" {
             textFieldText = "Nice breakfast time!"
             withAnimation {
@@ -121,21 +119,21 @@ struct AddView: View {
         else if selectedEmoji == "👯" {
             textFieldText = "Date with "
         }
-         else if selectedEmoji == "📚" {
-             textFieldText = "Study"
-             withAnimation {
-                 importanceLevel  = 5
-             }
-         }
+        else if selectedEmoji == "📚" {
+            textFieldText = "Study"
+            withAnimation {
+                importanceLevel  = 5
+            }
+        }
         else {
             textFieldText = "" // Diğer emojiler için metin alanını temizleme
         }
     }
-
+    
     
     func saveButtonPressed() {
         if textIsAppropriate() {
-            listViewModel.addItem(title: textFieldText, startTime: selectedStartTime, endTime: selectedEndTime, emoji: selectedEmoji, userDayPoint: importanceLevel)
+            listViewModel.addItem(title: textFieldText, startTime: selectedStartTime, endTime: selectedEndTime, emoji: selectedEmoji, userDayPoint: importanceLevel, importanceLevel: importanceLevel)
             presentationMode.wrappedValue.dismiss()
         }
     }
@@ -156,14 +154,14 @@ struct AddView: View {
         }
         
     }
-
+    
     
     func emptyTimeSlots() -> [TimeSlot] {
         let sortedItems = listViewModel.items.sorted { $0.startTime < $1.startTime }
         var emptySlots: [TimeSlot] = []
         
         var previousEndTime = calendar.startOfDay(for: Date())
-
+        
         for item in sortedItems {
             if item.startTime > previousEndTime {
                 let slotDuration = calendar.dateComponents([.minute], from: previousEndTime, to: item.startTime)
@@ -195,14 +193,14 @@ struct AddView: View {
         
         for emptySlot in emptySlots {
             print(emptySlot)
-           if selectedSlot.startTime >= emptySlot.startTime && selectedSlot.endTime <= emptySlot.endTime {
+            if selectedSlot.startTime >= emptySlot.startTime && selectedSlot.endTime <= emptySlot.endTime {
                 return true
             }
         }
         
         return false
     }
-
+    
     
     func getAlert() -> Alert {
         return Alert(title: Text(alertTitle))
@@ -215,6 +213,7 @@ struct AddView_Previews: PreviewProvider {
     static var previews: some View {
         
         Group {
+            
             NavigationView {
                 AddView()
             }

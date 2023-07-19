@@ -91,8 +91,8 @@ struct ShareLinkView_Previews: PreviewProvider {
     static var previews: some View {
         let scoreViewModel = ScoreViewModel()
         scoreViewModel.scores = [
-            ScoreModel(dateScore: "", totalTasks: 10, doneTasks: 5),
-            ScoreModel(dateScore: "", totalTasks: 8, doneTasks: 3)
+            ScoreModel(dateScore: "", totalTasks: 8, doneTasks: 4, titleOfTask: "title", completedOfTask: true, importanceOfTask: "3", rangeTime: "2"),
+            ScoreModel(dateScore: "", totalTasks: 7, doneTasks: 3, titleOfTask: "title2", completedOfTask: false, importanceOfTask: "3", rangeTime: "1")
         ]
         
         return NavigationView {

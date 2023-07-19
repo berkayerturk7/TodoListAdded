@@ -64,7 +64,7 @@ struct ListRowView: View {
 struct ListRowView_Previews: PreviewProvider {
     static var previews: some View {
         
-        ListRowView(item: ItemModel(title: "title", isCompleted: true, startTime: Date(), endTime: Date(), emoji: "", userItemPoint: 0))
+        ListRowView(item: ItemModel(title: "title", isCompleted: true, startTime: Date(), endTime: Date(), emoji: "", userItemPoint: 0, importanceLevel: 2))
     }
 }
 

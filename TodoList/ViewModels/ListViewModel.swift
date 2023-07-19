@@ -55,8 +55,8 @@ class ListViewModel: ObservableObject {
         items.move(fromOffsets: from, toOffset: to)
     }
     
-    func addItem(title: String, startTime: Date, endTime:Date, emoji:String, userDayPoint: Int) {
-        let newItem = ItemModel(title: title, isCompleted: false, startTime: startTime, endTime: endTime, emoji: emoji, userItemPoint: userDayPoint) // default false
+    func addItem(title: String, startTime: Date, endTime:Date, emoji:String, userDayPoint: Int, importanceLevel: Int) {
+        let newItem = ItemModel(title: title, isCompleted: false, startTime: startTime, endTime: endTime, emoji: emoji, userItemPoint: userDayPoint, importanceLevel: importanceLevel) // default false
         items.append(newItem)
     }
     
@@ -84,5 +84,11 @@ class ListViewModel: ObservableObject {
         let completedItems = items.filter { $0.isCompleted }
         return completedItems.count
     }
+    
+    // sonra ekledim
+    func getAllItemTitlesAndCompletionStatus() -> [(title: String, isCompleted: Bool, importanceLevel: Int, rangeTime:Int)] {
+        return items.map { (title: $0.title, isCompleted: $0.isCompleted, importanceLevel: $0.importanceLevel, rangeTime: $0.rangeTime) }
+    }
+
     
 }

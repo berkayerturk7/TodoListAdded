@@ -19,8 +19,8 @@ struct FullList: View {
     // Add Task Button
     @State private var animateAddTask: Bool = false
     @State private var scale: CGFloat = 1.3
-    
-    
+    @State private var isStartDay = true // StartDay butonu aktif,  false: Complete Day butonu aktif
+    @State private var showTopMenu = true
     
     
     var soundManager = SoundManager()
@@ -30,32 +30,40 @@ struct FullList: View {
         ZStack(alignment: .top) {
             
             VStack(spacing: 0) {
-                LogoView()
-                Picker(selection: $selectedIndex, label: Text("Tarih")) {
-                    Text(getTodayDate()).tag(0)
-                    Text(getTomorrowDate()).tag(1)
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                
-                Text("I am planning for \(selectedIndex == 0 ? getTodayDate() : getTomorrowDate())")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .cornerRadius(8)
-                    .background(Color.secondaryAccentColor)
-                
-                List {
+                if showTopMenu {
+                    LogoView()
+                    Picker(selection: $selectedIndex, label: Text("Tarih")) {
+                        Text(getTodayDate()).tag(0)
+                        Text(getTomorrowDate()).tag(1)
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
                     
+                    Text("I am planning for \(selectedIndex == 0 ? getTodayDate() : getTomorrowDate())")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .cornerRadius(8)
+                        .background(Color.secondaryAccentColor)
+                }
+                List {
+                    if !showTopMenu {
+                        Text("My TODO list for \(selectedIndex == 0 ? getTodayDate() : getTomorrowDate())")
+                            .font(.title2)
+                            .foregroundColor(.black)
+                        
+                    }
                     ForEach(listViewModel.items) { item in //arrayin her bir elemanı = item
                         ListRowView(item: item)
-                            .onTapGesture { // bir hücreye tıkladığımızda
-                                withAnimation(.linear) {
-                                    listViewModel.updateItem(item: item)
+                            .onTapGesture {
+                                if !showTopMenu {
+                                    withAnimation(.linear) {
+                                        listViewModel.updateItem(item: item)
+                                    }
+                                    SoundManager.instance.playSound()
                                 }
-                                SoundManager.instance.playSound()
-                                
                             }
+                        
                             .swipeActions(edge: .leading) {
                                 Button(action: {
                                     selectedItem = item
@@ -75,7 +83,6 @@ struct FullList: View {
                     .onMove(perform: listViewModel.moveItem)
                     
                 }
-                
                 
                 .onAppear(perform: structB.decValue)
                 .listStyle(PlainListStyle())
@@ -99,28 +106,72 @@ struct FullList: View {
                     }
                 )
                 .alert(isPresented: $isShowingAlert) {
-                    Alert(
-                        title: Text("Günü tamamlamak istediğinize emin misiniz?"),
-                        message: Text("Bu işlem geri alınamaz"),
-                        primaryButton: .cancel(Text("İptal")),
-                        secondaryButton: .destructive(Text("Tamamla")) {
-                            // Tamamla butonuna tıklandığında yapılacak işlemler
-                            
-                            scoreViewModel.scores.append(ScoreModel(dateScore: selectedIndex == 0 ? getTodayDate() : getTomorrowDate(), totalTasks: listViewModel.getCountOfItems(), doneTasks: listViewModel.getCountCompletedItems()))
-                            scoreViewModel.saveScores()
-                            
-                            
-                            print("saved")
-                            tabSelection.selectedTab = 1
-                            //listViewModel.items.removeAll()
-                            
-                            
-                            
-                        }
-                    )
+                    if !isStartDay {
+                        return Alert(
+                            title: Text("Günü tamamlamak istediğinize emin misiniz?"),
+                            message: Text("Bu işlem geri alınamaz"),
+                            primaryButton: .cancel(Text("İptal")),
+                            secondaryButton: .destructive(Text("Tamamla")) {
+                                // Tamamla butonuna tıklandığında yapılacak işlemler
+                                isStartDay = true
+                                showTopMenu = true
+                                
+                                // Sonradan Eklendi
+                                // Sadece o gün tamamlanan title'lar istatistiklerim sayfasına eklendi.
+                                
+                                let titlesAndCompletionStatus = listViewModel.getAllItemTitlesAndCompletionStatus()
+                                let tasksInfo: [TaskInfo] = titlesAndCompletionStatus.map { TaskInfo(title: $0.title, isCompleted: $0.isCompleted, importanceLevel: $0.importanceLevel, rangeTime: $0.rangeTime) }
+                                
+                                var scoreModels: [ScoreModel] = []
+                                
+                                let completedTasks = tasksInfo.filter { $0.isCompleted }
+                                let combinedTitle = completedTasks.map { $0.title }.joined(separator: "\n")
+                                let combinedCompleted = completedTasks.isEmpty ? false : true
+                                let combinedImportanceLevels = completedTasks.map { String($0.importanceLevel) }.joined(separator: "\n")
+                                
+                                let combinedRangeTime = completedTasks.map { String($0.rangeTime) }.joined(separator: "\n")
+                                
+                                let scoreModel = ScoreModel(dateScore: selectedIndex == 0 ? getTodayDate() : getTomorrowDate(),
+                                                            totalTasks: listViewModel.getCountOfItems(),
+                                                            doneTasks: listViewModel.getCountCompletedItems(),
+                                                            titleOfTask: combinedTitle,
+                                                            completedOfTask: combinedCompleted, importanceOfTask: combinedImportanceLevels, rangeTime: combinedRangeTime)
+                                
+                                if !completedTasks.isEmpty {
+                                    scoreModels.append(scoreModel)
+                                }
+                                
+                                scoreViewModel.scores.append(contentsOf: scoreModels)
+                                
+                                
+                                scoreViewModel.saveScores()
+                                print("saved")
+                                tabSelection.selectedTab = 1
+                                //listViewModel.items.removeAll()
+                            }
+                        )
+                    }
+                    else {
+                        return Alert(
+                            // Start Day'in Alerti
+                            title: Text("Günü başlatmak istediğinize emin misiniz?"),
+                            message: Text("Bu işlem geri alınamaz, listeye yeni eleman eklemeye devam edebilirsiniz."),
+                            primaryButton: .cancel(Text("İptal")),
+                            secondaryButton: .default(Text("Başlat!")) {
+                                // Başlat butonuna tıklandığında yapılacak işlemler
+                                // ...
+                                withAnimation {
+                                    showTopMenu = false
+                                    isStartDay = false
+                                }
+                                
+                            }
+                        )
+                    }
+                    
                 }
             }
-
+            
             .onAppear {
                 isAnimating = true
             }
@@ -128,27 +179,7 @@ struct FullList: View {
                 VStack {
                     Spacer()
                     VStack(spacing: -6) {
-                       
-                        Button(action: {
-                            // İlk butona tıklandığında yapılacak işlemler
-                        }) {
-                            /*ZStack {
-                                Circle()
-                                    .foregroundColor(.secondaryAccentColor)
-                                    .frame(width: 90, height: 90)
-                                    .shadow(color: animate ? secondaryAccentColor.opacity(0.7) : Color.blue.opacity(0.7), radius: animate ? 30 : 5, x: 0, y: animate ? 50 : 2)
-                                
-                                Text("Start Day 🏁")
-                                    .font(.caption)
-                                    .bold()
-                                    .foregroundColor(.white)
-                                    .multilineTextAlignment(.center)
-                                    .padding()
-                                    .frame(width: 90)
-                                    .lineLimit(2)
-                            }*/
-                        }
-                       
+                        
                         Button(action: {
                             // Kırmızı butona tıklandığında yapılacak işlemler
                             isShowingSheet = true
@@ -191,33 +222,54 @@ struct FullList: View {
                             AddView()
                         }
                         
-                        Button(action: {
-                            // Yeşil butona tıklandığında yapılacak işlemler
-                            isShowingAlert = true
-                        }) {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .foregroundColor(secondaryAccentColor)
-                                    .frame(width: 170, height: 30)
-                                    .shadow(color: animate ? secondaryAccentColor.opacity(0.7) : Color.green.opacity(0.7), radius: animate ? 30 : 5, x: 0, y: animate ? 50 : 2)
+                        
+                        if isStartDay {
+                            Button(action: {
+                                withAnimation {
+                                    
+                                    isShowingAlert = true
+                                }
                                 
-                                HStack {
+                            }) {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .foregroundColor(secondaryAccentColor)
+                                        .frame(width: 170, height: 30)
+                                        .shadow(color: animate ? secondaryAccentColor.opacity(0.7) : Color.green.opacity(0.7), radius: animate ? 30 : 5, x: 0, y: animate ? 50 : 2)
+                                    
+                                    Text("Start Day")
+                                        .font(.system(size: 14, weight: .bold)) // Font boyutunu düzenle
+                                        .foregroundColor(.white)
+                                        .padding()
+                                }
+                            }
+                        }
+                        else {
+                            
+                            Button(action: {
+                                // Complete day butonuna tıklandığında yapılacak işlemler
+                                isShowingAlert = true
+                                
+                            }) {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .foregroundColor(secondaryAccentColor)
+                                        .frame(width: 170, height: 30)
+                                        .shadow(color: animate ? secondaryAccentColor.opacity(0.7) : Color.green.opacity(0.7), radius: animate ? 30 : 5, x: 0, y: animate ? 50 : 2)
+                                    
+                                    
                                     Text("Complete Day")
                                         .font(.system(size: 14, weight: .bold)) // Font boyutunu düzenle
                                         .foregroundColor(.white)
                                         .padding()
-                                        //.frame(maxWidth: .infinity) // İçeriği butona sığdırmak için maksimum genişlik ayarla
+                                    //.frame(maxWidth: .infinity) // İçeriği butona sığdırmak için maksimum genişlik ayarla
                                 }
                             }
-
                         }
-                        
                     }
-                    
                     .padding(.bottom, 16)
                 }
             }
-            //
         }
     }
     
@@ -246,11 +298,7 @@ struct FullList: View {
         }
     }
     
-    
-    
-    
-    
-    
+   
     struct FullListView_Previews: PreviewProvider {
         static var previews: some View {
             FullList().environmentObject(ListViewModel())

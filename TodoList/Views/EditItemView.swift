@@ -1,16 +1,9 @@
-//
-//  EditItemView.swift
-//  TodoList
-//
-//  Created by Berkay Ertürk on 25.06.2023.
-//
-
 import SwiftUI
 
 struct EditItemView: View {
     
     var itemToBeEdited: ItemModel
-    
+    @State var emptySlots: [TimeSlot] = []
     
     init(itemToBeEdited: ItemModel) {
             self.itemToBeEdited = itemToBeEdited
@@ -89,8 +82,13 @@ struct EditItemView: View {
             }
             .padding(14)
         }
+        .onAppear(perform: {
+            // Edit Item View görünür olur olmaz, empty slota ilgili saat aralığını tekrar ekle!
+            emptySlots.append(TimeSlot(startTime: selectedStartTime, endTime: selectedEndTime))
+        })
         .navigationTitle("Add an item 🖊️ ")
         .alert(isPresented: $showAlert, content: getAlert)
+        
     }
     
     func updateTextFieldText() {
@@ -120,9 +118,14 @@ struct EditItemView: View {
     
     
     func saveButtonPressed() {
+        let timeSlotToRemove = TimeSlot(startTime: selectedStartTime, endTime: selectedEndTime)
         if textIsAppropriate() {
+            // Edit Button sayfasında, aynı itemin aynı aralık veya daha dar aralıkta kaydedilebilmesi için
+            if let index = emptySlots.firstIndex(where: { $0.startTime == timeSlotToRemove.startTime && $0.endTime == timeSlotToRemove.endTime }) {
+                emptySlots.remove(at: index)
+            }
            listViewModel.items.removeAll { $0.id == itemToBeEdited.id }
-            listViewModel.addItem(title: textFieldText, startTime: selectedStartTime, endTime: selectedEndTime, emoji: selectedEmoji, userDayPoint: importanceLevel)
+            listViewModel.addItem(title: textFieldText, startTime: selectedStartTime, endTime: selectedEndTime, emoji: selectedEmoji, userDayPoint: importanceLevel, importanceLevel: importanceLevel)
             print("x")
 
             presentationMode.wrappedValue.dismiss()
@@ -147,7 +150,7 @@ struct EditItemView: View {
     
     func emptyTimeSlots() -> [TimeSlot] {
         let sortedItems = listViewModel.items.sorted { $0.startTime < $1.startTime }
-        var emptySlots: [TimeSlot] = []
+       
         
         var previousEndTime = calendar.startOfDay(for: Date())
 
@@ -200,6 +203,6 @@ struct EditItemView: View {
 
 struct EditItemView_Previews: PreviewProvider {
     static var previews: some View {
-        EditItemView(itemToBeEdited: ItemModel.init(title: "", isCompleted: false, startTime: Date(), endTime: Date(), emoji: "", userItemPoint: 0))
+        EditItemView(itemToBeEdited: ItemModel.init(title: "", isCompleted: false, startTime: Date(), endTime: Date(), emoji: "", userItemPoint: 0, importanceLevel: 3))
     }
 }
